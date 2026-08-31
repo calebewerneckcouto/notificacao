@@ -5,6 +5,11 @@
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/notificacao" />
         <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/notificacao" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>
