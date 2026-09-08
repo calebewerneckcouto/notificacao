@@ -1,0 +1,6 @@
+.gradle
+build
+.idea
+*.iml
+HELP.md
+src/main/resources/templates/notificacao.html

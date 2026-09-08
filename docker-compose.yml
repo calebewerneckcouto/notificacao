@@ -1,0 +1,10 @@
+services:
+  notificacao:
+    build:
+      context: ./notificacao
+      dockerfile: Dockerfile
+    image: notificacao:latest
+    container_name: notificacao
+    ports:
+      - "8082:8082"
+    restart: unless-stopped
