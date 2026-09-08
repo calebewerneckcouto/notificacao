@@ -34,3 +34,9 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// O arquivo templates/notificacao.html está com ACL do Windows bloqueada
+// (Acesso negado). Evita que o processResources falhe na cópia.
+tasks.named('processResources', Copy) {
+	exclude 'templates/notificacao.html'
+}

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Notificação de Tarefa</title>
+</head>
+<body>
+    <h1>Notificação de Tarefa</h1>
+    <p>Olá,</p>
+    <p>Você tem uma tarefa pendente:</p>
+    <p><strong>Nome:</strong> <span th:text="${nomeTarefa}"></span></p>
+    <p><strong>Data do evento:</strong> <span th:text="${#temporals.format(dataEvento, 'dd/MM/yyyy HH:mm')}"></span></p>
+    <p><strong>Descrição:</strong> <span th:text="${descricao}"></span></p>
+</body>
+</html>
