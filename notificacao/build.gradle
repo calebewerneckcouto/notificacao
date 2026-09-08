@@ -31,6 +31,10 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
+tasks.named('bootJar') {
+	archiveFileName = 'notificacao.jar'
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
