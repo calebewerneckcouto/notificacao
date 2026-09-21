@@ -1,6 +1,7 @@
 package com.javanauta.notificacao.controller;
 
 import com.javanauta.notificacao.business.EmailService;
+import com.javanauta.notificacao.business.dto.RecuperarSenhaDTO;
 import com.javanauta.notificacao.business.dto.TarefasDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,17 @@ public class EmailController {
     private final EmailService emailService;
 
     @PostMapping
-    public ResponseEntity<Void>enviarEmail(@RequestBody TarefasDTO tarefasDTO){
+    public ResponseEntity<Void> enviarEmail(@RequestBody TarefasDTO tarefasDTO) {
         emailService.enviaEmail(tarefasDTO);
         return ResponseEntity.ok().build();
+    }
 
+    @PostMapping("/senha")
+    public ResponseEntity<Void> enviarEmailRecuperacaoSenha(@RequestBody RecuperarSenhaDTO dto) {
+        emailService.enviaEmailRecuperacaoSenha(dto);
+        return ResponseEntity.ok().build();
     }
 
 }
+
+

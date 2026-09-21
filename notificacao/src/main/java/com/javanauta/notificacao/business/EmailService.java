@@ -1,5 +1,6 @@
 package com.javanauta.notificacao.business;
 
+import com.javanauta.notificacao.business.dto.RecuperarSenhaDTO;
 import com.javanauta.notificacao.business.dto.TarefasDTO;
 import com.javanauta.notificacao.business.exception.EmailException;
 import jakarta.mail.MessagingException;
@@ -30,23 +31,44 @@ public class EmailService {
     @Value("${envio.email.nomeRemetente}")
     public String nomeRementente;
 
-    public void enviaEmail(TarefasDTO dto){
-        try{
+    public void enviaEmail(TarefasDTO dto) {
+        try {
             MimeMessage mensagem = javaMailSender.createMimeMessage();
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mensagem,true, StandardCharsets.UTF_8.name());
-            mimeMessageHelper.setFrom(new InternetAddress(remetente,nomeRementente));
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mensagem, true, StandardCharsets.UTF_8.name());
+            mimeMessageHelper.setFrom(new InternetAddress(remetente, nomeRementente));
             mimeMessageHelper.setTo(InternetAddress.parse(dto.getEmailUsuario()));
             mimeMessageHelper.setSubject("Notificação de Tarefa");
 
             Context context = new Context();
-            context.setVariable("nomeTarefa",dto.getNomeTarefa());
-            context.setVariable("dataEvento",dto.getDataEvento());
-            context.setVariable("descricao",dto.getDescricao());
+            context.setVariable("nomeTarefa", dto.getNomeTarefa());
+            context.setVariable("dataEvento", dto.getDataEvento());
+            context.setVariable("descricao", dto.getDescricao());
             String template = templateEngine.process("email-notificacao", context);
-            mimeMessageHelper.setText(template,true);
+            mimeMessageHelper.setText(template, true);
             javaMailSender.send(mensagem);
-        }catch(MessagingException | UnsupportedEncodingException e){
+        } catch (MessagingException | UnsupportedEncodingException e) {
             throw new EmailException("Erro ao enviar o email" + e.getCause());
+        }
+    }
+
+
+    public void enviaEmailRecuperacaoSenha(RecuperarSenhaDTO dto) {
+        try {
+            MimeMessage mensagem = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mensagem, true, StandardCharsets.UTF_8.name());
+            helper.setFrom(new InternetAddress(remetente, nomeRementente));
+            helper.setTo(InternetAddress.parse(dto.getEmailUsuario()));
+            helper.setSubject("Recuperação de senha");
+
+            Context context = new Context();
+            context.setVariable("senha", dto.getSenha());
+            String template = templateEngine.process("email-recuperacao-senha", context);
+            helper.setText(template, true);
+            javaMailSender.send(mensagem);
+
+
+        } catch (MessagingException | UnsupportedEncodingException e) {
+            throw new EmailException("Erro ao enviar email" + e.getCause());
         }
     }
 
